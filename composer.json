@@ -1,7 +1,7 @@
 {
     "name": "chkn/core",
     "description": "PHP MVC Framework",
-    "license": "MIT License",
+    "license": "MIT",
     "autoload": {
     },
     "authors": [
