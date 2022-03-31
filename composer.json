@@ -1,0 +1,16 @@
+{
+    "name": "chkn/core",
+    "description": "PHP MVC Framework",
+    "license": "MIT License",
+    "autoload": {
+        "psr-4": {
+            "Chkn\\Core\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Percian Joseph Borja"
+        }
+    ],
+    "require": {}
+}

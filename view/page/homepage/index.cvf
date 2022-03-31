@@ -1,0 +1,13 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-sm-12 offset-md-3 offset-sm-3">
+				<img src="[chkn:path]public/images/logo.png">
+
+				<p>CHKN Framework</p>
+				<nav> 
+						<a href="[chkn:path]console">Console</a> | 
+						<a href="http://www.chkn.ml">Documentation</a>
+				</nav>
+		</div>
+	</div>
+</div>
