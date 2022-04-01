@@ -1,5 +1,4 @@
 <?php
-namespace App\Exception;
 class Catcher{
 	public function errorHandler($type,$message,$file,$line){
 		if($type != ""){

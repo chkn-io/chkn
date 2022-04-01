@@ -464,7 +464,6 @@ class AuthController extends Controller{
 
 	public function getValues(){
 		$c = $_POST["command"];
-
 		if($c == "db"){
 			$result = "Connection:".DB_CONNECTION.
 					  " | Host:".DB_HOST.

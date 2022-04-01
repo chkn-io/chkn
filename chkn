@@ -1,0 +1,4 @@
+<?php
+require "App/CHKN/CHKN.php";
+use App\CHKN\CHKN;
+$chkn = new CHKN($argv);

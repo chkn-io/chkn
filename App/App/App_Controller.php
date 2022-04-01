@@ -2,11 +2,11 @@
 namespace App\App;
 
 use App\View\View;
+use App\View\Error;
+use App\View\maintenance;
 use App\Template\CHKNTemplate;
 use App\Controller\Auth;
 
-use http\Defaults\chknError;
-use http\Defaults\maintenance;
 
 class App_Controller{
 	public $assignedValues = array();
@@ -30,7 +30,7 @@ class App_Controller{
         $this->view = new View;
         
         if(PAGE_NOT_FOUND == 1){
-           $this->error = new chknError;
+           $this->error = new Error;
         }
         if(MAINTENANCE_CLASS == 1){
            $this->maintenance = new maintenance;

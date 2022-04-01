@@ -9,5 +9,7 @@
             "name": "Percian Joseph Borja"
         }
     ],
-    "require": {}
+    "require": {
+        "doctrine/dbal": "^3.3"
+    }
 }

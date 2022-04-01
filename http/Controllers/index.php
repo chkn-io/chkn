@@ -4,6 +4,7 @@ namespace http\Controllers;
 use App\Controller\Controller;
 use App\App\Request;
 use http\Module\Module;
+use App\Database\DB;
 
 class index extends Controller{
 	public function index_page(Request $r){
@@ -17,10 +18,11 @@ class index extends Controller{
 		//set js
 		$this->js(array(
 		));
-
-
-
 		$this->body('homepage/index');
+		$stmt = DB::select("records")->fetch();
+
+		print_r($stmt);
 		$this->show();
+
 	}
 }
