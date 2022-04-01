@@ -63,7 +63,7 @@ class CHKN{
         }
     }
     private function serve($port){
-        shell_exec("php -S localhost:".$port." -c php.ini");
+        shell_exec("php -S localhost:".$port);
     }
 
     private function installKey(){

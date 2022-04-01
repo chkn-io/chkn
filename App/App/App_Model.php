@@ -1,15 +1,16 @@
 <?php
 
 namespace App\App;
+use PDO;
 class App_Model{
 		protected static $dbconn;
 		private static $statement;
 		protected static function db_connect() {
             if(DB_HOST != '' && DB_NAME != '' && DB_USER != '' && DB_CONNECTION != ''){
                 try {
-                    self::$dbconn=new \PDO(DB_CONNECTION.':host='.DB_HOST.';dbname='.DB_NAME.';port=3306;charset='.DB_CHARSET.'',''.DB_USER.'',''.DB_PASSWORD.'');
-                    self::$dbconn->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-                    self::$dbconn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+                    self::$dbconn=new PDO(DB_CONNECTION.':host='.DB_HOST.';dbname='.DB_NAME.';port=3306;charset='.DB_CHARSET.'',''.DB_USER.'',''.DB_PASSWORD.'');
+                    self::$dbconn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+                    self::$dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     return [0=>"success"];
                 }catch(PDOException $e){
                     $error = array();

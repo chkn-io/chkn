@@ -1,0 +1,48 @@
+body{
+    margin:0;
+    padding:0;
+    font-family:helvetica;
+}
+
+*{
+    box-sizing: border-box;
+}
+header{
+    width:100%;
+    float:left;
+    color:#fff;
+    padding:10pt;
+}
+
+main{
+    width:100%;
+    float:left;
+}
+
+main div{
+    padding:10pt;
+    background-color:rgb(240, 236, 236);
+}
+
+
+main ul{
+    list-style: none;
+    margin:0;
+    padding:10pt;
+}
+
+main ul li{
+    padding:10pt;
+    border:1px solid #ccc;
+}
+
+footer{
+    width:100%;
+    float:left;
+    padding:10pt;
+    background-color:#222;
+    color:#fff;
+    text-align: center;
+    position:fixed;
+    bottom:0;
+}

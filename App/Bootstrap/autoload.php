@@ -11,7 +11,8 @@ date_default_timezone_set('Asia/Manila');
 
 require_once('App/App/App.php');
 $app = new App;
-// Defaults
+
+
 
 // App Components
 require_once('App/App/App_Controller.php');
@@ -22,6 +23,7 @@ require_once('App/App/Loader.php');
 require_once('App/Route/Router.php');
 // require_once('App/Exception/catch.php');
 
+// Defaults
 if(PAGE_NOT_FOUND == 1){
     require_once('App/View/Error.php');
 }
