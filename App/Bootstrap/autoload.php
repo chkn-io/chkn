@@ -21,7 +21,6 @@ require_once('App/App/App_Model.php');
 require_once('App/App/Request.php');
 require_once('App/App/Loader.php');
 require_once('App/Route/Router.php');
-// require_once('App/Exception/catch.php');
 
 // Defaults
 if(PAGE_NOT_FOUND == 1){
@@ -41,7 +40,6 @@ if(QUERY_BUILDER == 1){
 
 require_once('App/View/View.php');
 require_once('App/Controller/Controller.php');
-require_once('App/Controller/Console.php');
 require_once('App/Controller/Auth.php');
 require_once('App/App/CSRFToken.php');
 
@@ -69,7 +67,6 @@ require_once('App/Helpers/encryption.php');
 require_once('App/Helpers/upload.php');
 require_once('App/Helpers/download.php');
 require_once('App/Helpers/default.php');
-
 
 
 require_once('http/Controllers/index.php');

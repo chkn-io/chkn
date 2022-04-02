@@ -1,4 +1,4 @@
 <?php
-require 'App/CHKN/CHKN.php';
-use App\CHKN\CHKN;
-$chkn = new CHKN($argv);
+require 'App/Console/Console.php';
+use App\Console\Console;
+new Console($argv);

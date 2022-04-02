@@ -5,8 +5,7 @@
 
 				<p>CHKN Framework</p>
 				<nav> 
-						<a href="[chkn:path]console">Console</a> | 
-						<a href="http://www.chkn.ml">Documentation</a>
+						<a target="__blank" href="https://github.com/chkn-io/chkn">Documentation</a>
 				</nav>
 		</div>
 	</div>

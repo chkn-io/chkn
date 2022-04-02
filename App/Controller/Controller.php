@@ -80,10 +80,12 @@ class Controller extends App_Controller{
 
     function chknError(){
         $this->error->error_page();
+		exit;
     }
 
     function maintenance(){
     	$this->maintenance->maintenance_page();
+		exit;
     }
 
     function variable($_searchString, $_replacedString){

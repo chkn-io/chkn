@@ -5,7 +5,6 @@ use App\View\View;
 use App\View\Error;
 use App\View\maintenance;
 use App\Template\CHKNTemplate;
-use App\Controller\Auth;
 
 
 class App_Controller{

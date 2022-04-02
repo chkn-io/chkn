@@ -35,35 +35,48 @@ class Auth extends Controller
     		->fetch();
 
     	if(count($data) != 0){
-    		$decrypt_password = Helpers::decrypt($users[0][$keys[1]]);
-    		if($decrypt_password == $data[$keys[1]]){
-    			Session::put("auth",$users[0]);
-                Session::put("auth_message",["message" => "Authentication Success","status"=>"success"]);
-                Session::put('lauth','success');
-    			if(isset($data["url"])){
-    				if(isset($data["url"]["success"])){
-                       echo $data["url"]["success"];
-                        header("location:".$data["url"]["success"]);
+            if(count($users) != 0){
+                $decrypt_password = Helpers::decrypt($users[0][$keys[1]]);
+                if($decrypt_password == $data[$keys[1]]){
+                    Session::put("auth",$users[0]);
+                    Session::put("auth_message",["message" => "Authentication Success","status"=>"success"]);
+                    Session::put('lauth','success');
+                    if(isset($data["url"])){
+                        if(isset($data["url"]["success"])){
+                            echo $data["url"]["success"];
+                            header("location:".$data["url"]["success"]);
+                        }else{
+                            return array("message"=>"Success","status"=>"success");
+                        }
                     }else{
                         return array("message"=>"Success","status"=>"success");
                     }
-    			}else{
-                    return array("message"=>"Success","status"=>"success");
-    			}
-
-    		}else{
-                Session::put("auth_message",["message" => "Wrong Username or Password","status"=>"error"]);
-    			if(isset($data["url"])){
-                    if(isset($data["url"]["failed"])){
-                        header("location:".$data["url"]["failed"]);
+    
+                }else{
+                    Session::put("auth_message",["message" => "Wrong Username or Password","status"=>"error"]);
+                    if(isset($data["url"])){
+                        if(isset($data["url"]["failed"])){
+                            header("location:".$data["url"]["failed"]);
+                        }else{
+                            return array("message"=>"Incorrect Password","status"=>"error");
+                        }
                     }else{
                         return array("message"=>"Incorrect Password","status"=>"error");
                     }
-    			}else{
-                    return array("message"=>"Incorrect Password","status"=>"error");
-    			}
-    		}
-    	}else{
+                }
+            }else{
+                Session::put("auth_message",["message" => "Wrong Username or Password","status"=>"error"]);
+                    if(isset($data["url"])){
+                        if(isset($data["url"]["failed"])){
+                            header("location:".$data["url"]["failed"]);
+                        }else{
+                            return array("message"=>"Incorrect Password","status"=>"error");
+                        }
+                    }else{
+                        return array("message"=>"Incorrect Password","status"=>"error");
+                    }
+            }
+        }else{
             if(isset($data["url"])){
                 Session::put("auth_message",["message" => "Error","status"=>"error"]);
                 if(isset($data["url"]["failed"])){
@@ -74,7 +87,6 @@ class Auth extends Controller
             }else{
                 return array("message"=>"Incorrect Username","status"=>"error");
             }
-            
         }
 
     }
@@ -174,7 +186,7 @@ class Auth extends Controller
         if($url == ""){
             return ["message"=>"Logout","status"=>1];
         }else{
-            $this->locate($url);
+            header("location:".$url);
         }
     }
 }

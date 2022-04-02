@@ -18,6 +18,7 @@ class index extends Controller{
 		$this->js(array(
 		));
 
+
 		$this->body('homepage/index');
 		$this->show();
 	}

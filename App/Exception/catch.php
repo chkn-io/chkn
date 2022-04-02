@@ -5,7 +5,7 @@ class Catcher{
 		if($type != ""){
 			ob_clean();
 			$head = $this->header($type);
-			$html = file_get_contents("view/defaults/exception/exception.tpl");
+			$html = file_get_contents(DEFAULT_URL."view/defaults/exception/exception.tpl");
 			$html = str_replace("{ERROR_TYPE}",$head["message"],$html);
 			$html = str_replace("{DEFAULT_URL}",DEFAULT_URL,$html);
 			$html = str_replace("{LINE_NUMBER}",$line,$html);
