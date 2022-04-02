@@ -3,20 +3,23 @@ PHP Framework for developing lightweight server-side application.
 
 
 ## Installation
-1. Download and copy the CHKN3 Files on your local server.
-2. Open the CHKN console by navigating to http://localhost/chkn/console
-   * Enter the command chkn -help for the list of commands.
-   * You need to include the word chkn before the command.
+1. Download the package using composer.
+   * `composer create-project chkn/core folder_name`
+2. Install Application Key
+   * `php chkn key:generate`
 3. Change the rootfolder of the app. It must be the name of your main folder.
-    * Use `chkn rootfolder` command
-4. Application Key Installation. 
-    * Use `chkn install key` command
-5. Database Configuration
-    * Use `chkn db -help` command for the syntax.
+   * `php chkn root folder_name`
+4. Database Configuration
+    * Changing Database Connection = `php chkn db:connection __Connection__`
+    * Changing Database Host = `php chkn db:host __host__`
+    * Changing Database Name = `php chkn db:name __name__`
+    * Changing Database Charset = `php chkn db:charset __charset__`
+    * Changing Database Username = `php chkn db:username __username__`
+    * Changing Database Password = `php chkn db:password __password__`
 
 
 ## Package
-Default classes on CHKN Framework are grouped and compiled inside Drive://xampp/htdocs/rootfolder/config/Package/package.conf  
+Default classes on CHKN Framework are grouped and compiled inside `Drive:ROOT_FOLDER/config/Package/package.conf`
 
 
 * **Query Building Class** - *Set value to 0 to disable*
@@ -32,11 +35,6 @@ ENCRYPTION=1
 * **Download Class** - *Set value to 0 to disable*
 ```
 DOWNLOAD=1
-```
-
-* **DEFAULT Class** - *For displaying the status of the site using `$this->chkn_default`. Set value to 0 to disable*
-```
-DEFAULTS=1
 ```
 
 * **Upload Class** - *Set value to 0 to disable*
@@ -58,6 +56,7 @@ MAINTENANCE_CLASS=1
 ```
 PAGE_NOT_FOUND=1
 ```
+
 * **CSRF Token Class** - *Set value to 0 to disable*
 ```
 CSRF=1
@@ -104,37 +103,43 @@ As what we know about Controllers, they are the one actually responsible on what
 
 ### Creating a Controller
 * You have to create a PHP file inside the folder Http/Controller/. The File name must be the name of the Controller you want, followed by the word Controller. Example: homeController.php
-* On the CHKN Console. Simply enter `chkn create controller ___name of controller___`.
+* php create:controller __controller_name__
 
 Every Controller will contain the following codes.
 ```php
 <?php
-use App\App\Request;
-class sampleController extends Controller{
-     public function sample_page(Request $r){
-	//Call index template
-	$this->template('index');
-	//set default title
-	$this->title('CHKN Framework');
-	//set css
-	$this->css(array(
-	));
-	//set js
-	$this->js(array(
-	));
+namespace http\Controllers;
 
-	$this->body('homepage/index');
-	$this->show();
-     }
+use App\Controller\Controller;
+use App\App\Request;
+use http\Module\Module;
+
+class index extends Controller{
+	public function index_page(Request $r){
+		//Call index template
+		$this->template('index');
+		//set default title
+		$this->title('CHKN Framework');
+		//set css
+		$this->css([
+		]);
+		//set js
+		$this->js([
+		]);
+
+		$this->body('homepage/index');
+		$this->show();
+	}
 }
+
 
 
 ```
 
 * **$this->template('index')** - *Calling the the page template. 'index' is pertaining the the template file located at view/template/index.tpl*
 * **$this->title();** - *Set the title of the page.*
-* **$this->css(array());** - *Including stylesheets inside the page. CSS Files are stored at public/css. In addition, CSS Files are called without the .css file extension*
-* **$this->js(array());** - *Including scripts inside the page. Script Files are stored at public/js. In addition, Script Files are called without the .js file extension*
+* **$this->css([]);** - *Including stylesheets inside the page. CSS Files are stored at public/css. In addition, CSS Files are called without the .css file extension*
+* **$this->js([]);** - *Including scripts inside the page. Script Files are stored at public/js. In addition, Script Files are called without the .js file extension*
 * **$this->body('homepage/index')** - *Including the page content inside the template. This method will only going to fetch .cvf files*
 * **$this->show()** - *Compile the settings above and display the page.*
 
@@ -257,20 +262,25 @@ public function fetchData(Request $r){
 
 ## QUERY BUILDER
 On CHKN Framework, Database operations such as Create, Read, Update and Delete are handle using the QUERY BUILDER. 
+Add the Class DB on your Controller Class
+```php
+use App\Database\DB;
+```
+
 
 ### Select Query
-On CHKN Query Builder, Select Operation is executed using `$this->CRUD->select()`;
+On CHKN Query Builder, Select Operation is executed using `DB::select()`;
 #### Select All
 ```php
 public function select(Request $r){
-	$data = $this->CRUD->select("table")->fetch();
+	$data = DB::select("table")->fetch();
 }
 ```
 
 #### Select By Table Field
 ```php
 public function select(Request $r){
-	$data = $this->CRUD->select("table")
+	$data = DB::select("table")
 			->where("table_field","=","value")
 			->fetch();
 }
@@ -279,7 +289,7 @@ public function select(Request $r){
 #### Select with JOIN
 ```php
 public function select(Request $r){
-	$data = $this->CRUD->select("table")
+	$data = DB::select("table")
 			->join("other_table","table.field","=","other_table.field")
 			->where("table.field","=","value")
 			->fetch();
@@ -289,7 +299,7 @@ public function select(Request $r){
 #### Select with Limit
 ```php
 public function select(Request $r){
-	$data = $this->CRUD->select("table")
+	$data = DB::select("table")
 			->limit(1)
 			->fetch();
 }
@@ -297,18 +307,18 @@ public function select(Request $r){
 #### Select By Order
 ```php
 public function select(Request $r){
-	$data = $this->CRUD->select("table")
-			->orderBy("table_field","ASC")
-			->fetch();
+	DB::select("table")
+		->orderBy("table_field","ASC")
+		->fetch();
 }
 ```
 
 ### Insert Query
-On CHKN Query Builder, Insert Operation is executed using `$this->CRUD->insert()`;
+On CHKN Query Builder, Insert Operation is executed using `DB::insert()`;
 #### INSERT
 ```php
 public function insert(Request $r){
-	$data = $this->CRUD->insert("table")
+	$data = DB::insert("table")
 			->field("field_name","value")
 			->field("field_name","value")
 			->field("field_name","value")
@@ -317,22 +327,22 @@ public function insert(Request $r){
 ```
 
 ### Delete Query
-On CHKN Query Builder, Delete Operation is executed using `$this->CRUD->delete()`;
+On CHKN Query Builder, Delete Operation is executed using `DB::delete()`;
 #### DELETE
 ```php
 public function delete(Request $r){
-	$data = $this->CRUD->delete("table")
+	$data = DB::delete("table")
 			->where("field_name","=","value")
 			->execute();
 }
 ```
 
 ### Update Query
-On CHKN Query Builder, Update Operation is executed using `$this->CRUD->update()`;
+On CHKN Query Builder, Update Operation is executed using `DB::update()`;
 #### UPDATE
 ```php
 public function update(Request $r){
-	$data = $this->CRUD->update("table")
+	$data = DB::update("table")
 			->field("field_name","value")
 			->field("field_name","value")
 			->field("field_name","value")
@@ -342,12 +352,123 @@ public function update(Request $r){
 ```
 
 ### Query
-On CHKN Query Builder, You can create your own query using `$this->CRUD->query()`;
+On CHKN Query Builder, You can create your own query using `DB::query()`;
 #### QUERY
 ```php
 public function query(Request $r){
-	$data = $this->CRUD->query("SELECT * FROM table WHERE field={field}")
+	$data = DB::query("SELECT * FROM table WHERE field={field}")
 			->bind("field","value of field")
 			->execute();
 }
+```
+
+## Encryption and Decryption
+Encrypting and Decrypting String in the Controller
+
+### Decrypt
+```php
+// Include the class Helper
+use App\Helpers\Helpers;
+
+
+// In a method
+Helpers::encrypt("string to encrypt");
+
+```
+
+### Decrypt
+```php
+// Include the class Helper
+use App\Helpers\Helpers;
+
+
+// In a method
+Helpers::decrypt("encrypted string");
+
+```
+
+## Sessions
+The functions `session_start()` is already included in the framework's core. All the functions for handling Session are included in the class Session.
+
+### Saving Session
+For saving session, use the method put().
+```php
+// Include the class Session
+use App\App\Session;
+
+
+// In a method
+Session::put("session_name","session_value");
+
+```
+
+### Deleting Session
+For deleting session, use the method clear().
+```php
+// Include the class Session
+use App\App\Session;
+
+
+// In a method
+Session::clear("session_name");
+
+```
+
+### Reading stored Sessions
+For reading stored sessions, use the method get().
+```php
+// Include the class Session
+use App\App\Session;
+
+
+// In a method
+Session::get("session_name");
+
+```
+
+### Checking if Session exists
+For checking the session's existence, use the method check().
+```php
+// Include the class Session
+use App\App\Session;
+
+
+// In a method
+Session::check("session_name");
+
+```
+
+
+## Modules
+In CHKN Framework, you can define objects globally thru Modules. The App's Modules are located and can be created inside `http/Module` folder. CHKN Modules works like an ordinary Controller, but you can access it any existing Controllers inside `http/Controllers`
+```php
+<?php
+// Module
+namespace http\Module;
+use App\Controller\Controller;
+use App\Database\DB;
+class Module extends Controller{
+    public static function sample(){
+	return "Hello World"
+    }
+}
+
+//Controller
+<?php
+namespace http\Controllers;
+
+use App\Controller\Controller;
+use App\App\Request;
+use http\Module\Module;
+
+// Include the Module Class
+use http\Module\Module;
+
+class sampleController extends Controller{
+    public function home(Request $r){
+	// It will display Hello World in sample/home
+	echo Module::sample();
+    }
+}
+
 ```

@@ -146,6 +146,14 @@ class Console{
                     $this->AuthCreate();
                 break;
 
+                case "root":
+                    if(isset($argv[2])){
+                        $this->root($argv[2]);
+                    }else{
+                        $this->response("Invalid CHKN Command.","Error");
+                    }
+                break;
+
                 default:
                     $this->response("Invalid CHKN Command. Unknown command is executed.","Error");
             }
@@ -153,6 +161,11 @@ class Console{
     }
     private function serve($port){
         shell_exec("php -S localhost:".$port);
+    }
+
+    private function root($folder = ""){
+        $this->changeAppConfigValue("ROOT_FOLDER",$folder);
+        $this->response("Root folder is successfully updated","Success");
     }
 
     private function installKey(){

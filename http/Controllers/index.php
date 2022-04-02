@@ -12,11 +12,13 @@ class index extends Controller{
 		//set default title
 		$this->title('CHKN Framework');
 		//set css
-		$this->css(array(
-		));
+		$this->css([
+
+		]);
 		//set js
-		$this->js(array(
-		));
+		$this->js([
+			
+		]);
 
 
 		$this->body('homepage/index');
