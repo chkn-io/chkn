@@ -5,7 +5,7 @@ namespace App\Helpers;
 use App\Helpers\UploadHelper;
 use App\Helpers\encrypt_helper;
 use App\Helpers\defaults;
-class Helpers {
+class Helper {
 	
     public static function upload($file_location,$image,$image_name){
         if(UPLOAD == 1){

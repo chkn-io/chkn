@@ -481,7 +481,7 @@ class '.$controller.'Controller extends Controller{
     use App\App\Session;
     use App\Database\DB;
     use App\Controller\Auth;
-    use App\Helpers\Helpers;
+    use App\Helpers\Helper;
     
     class AuthController extends Controller{
         public function auth(){

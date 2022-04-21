@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\App\App_Controller;
-use App\Helpers\Helpers;
+use App\Helpers\Helper;
 use App\App\CSRFToken;
 use App\Helpers\defaults;
 
@@ -40,7 +40,7 @@ class Controller extends App_Controller{
 	}
 
 	function chkn_status(){
-		$data = Helpers::defaults();
+		$data = Helper::defaults();
 		$this->assign('chkn:body',$data);
 	}
 
