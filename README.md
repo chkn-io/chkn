@@ -368,22 +368,22 @@ Encrypting and Decrypting String in the Controller
 ### Decrypt
 ```php
 // Include the class Helper
-use App\Helpers\Helpers;
+use App\Helpers\Helper;
 
 
 // In a method
-Helpers::encrypt("string to encrypt");
+Helper::encrypt("string to encrypt");
 
 ```
 
 ### Decrypt
 ```php
 // Include the class Helper
-use App\Helpers\Helpers;
+use App\Helpers\Helper;
 
 
 // In a method
-Helpers::decrypt("encrypted string");
+Helper::decrypt("encrypted string");
 
 ```
 
