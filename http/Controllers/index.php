@@ -13,7 +13,7 @@ class index extends Controller{
 
 		//Change Page Title
 		$this->title("");
-a
+
 		//Page Style
 		$this->css([
 		]);
