@@ -449,7 +449,7 @@ PHP Debugging using CHKN Framework Dump and Die.
 
 ```php
 // Dump data in the application
-dd($array);
+dd($var);
 
 // Dump date time in the application
 ddt($message);
