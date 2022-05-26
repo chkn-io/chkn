@@ -36,7 +36,7 @@ class Auth extends Controller
 
     	if(count($data) != 0){
             if(count($users) != 0){
-                $decrypt_password = Helper::decrypt($users[0][$keys[1]]);
+                $decrypt_password = decrypt($users[0][$keys[1]]);
                 if($decrypt_password == $data[$keys[1]]){
                     Session::put("auth",$users[0]);
                     Session::put("auth_message",["message" => "Authentication Success","status"=>"success"]);

@@ -362,31 +362,6 @@ public function query(Request $r){
 }
 ```
 
-## Encryption and Decryption
-Encrypting and Decrypting String in the Controller
-
-### Decrypt
-```php
-// Include the class Helper
-use App\Helpers\Helpers;
-
-
-// In a method
-Helpers::encrypt("string to encrypt");
-
-```
-
-### Decrypt
-```php
-// Include the class Helper
-use App\Helpers\Helpers;
-
-
-// In a method
-Helpers::decrypt("encrypted string");
-
-```
-
 ## Sessions
 The functions `session_start()` is already included in the framework's core. All the functions for handling Session are included in the class Session.
 
@@ -437,6 +412,80 @@ use App\App\Session;
 Session::check("session_name");
 
 ```
+### Helpers
+Helpers are functions added to the core of PHP Framework to help you speed and homogenise repetitive tasks on development. 
+
+
+### Encryption and Decryption
+Encrypting and Decrypting String in the Controller
+
+- Encrypt
+```php
+
+// In a method
+encrypt("string to encrypt");
+
+// base64
+seal("string to encrypt");
+
+// Selected column in an array (base64)
+array_seal($array,$key);
+
+```
+
+- Decrypt
+```php
+
+// In a method
+decrypt("encrypted string");
+
+// base64
+rseal("encrypted string");
+
+```
+
+### Dump and Die
+PHP Debugging using CHKN Framework Dump and Die.
+
+```php
+// Dump data in the application
+dd($array);
+
+// Dump date time in the application
+ddt($message);
+```
+
+
+### Upload File
+Upload Files on your application
+
+```php
+upload($file_location,$image,$image_name);
+```
+
+### Download File
+Upload Files on your application
+
+```php
+download($filename,$file_location)
+```
+
+### Redirect Page
+Redirect from one page to another
+
+```php
+
+locate("location");
+```
+
+### JSON Response
+Throw a JSON Response on an HTTP Request
+
+```php
+echo response(["message"=>"success"],200);
+
+```
+
 
 
 ## Modules

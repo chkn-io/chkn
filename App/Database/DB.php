@@ -183,9 +183,6 @@ class DB extends Model{
         }elseif(self::$trans == "query"){
             self::$q = str_replace('{',':chknParam',self::$q);
             self::$q = str_replace('}','',self::$q);
-
-
-
             $response = self::get_list(self::$q,self::$line,self::$indexes);
             self::$indexes = array();
             self::$index_counter = 0;

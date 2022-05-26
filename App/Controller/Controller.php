@@ -54,30 +54,6 @@ class Controller extends App_Controller{
 		$this->dispose();
 	}
 
-    function locate($url){
-        header('location:'.DEFAULT_URL.$url);
-    }
-
-    function httpRequest($request){
-    	$this->post = $request["post"];
-    	$this->get = $request["get"];
-    }
-
-    function get($index){
-    	return $this->get[$index];
-    }
-
-    function post($index,$position = 0){
-    	return $this->post[$index][$position];
-
-    }
-
-    function response($info = [],$header=200){
-    	header("HTTP/1.0 ".$header);
-        header("Content-Type:application/json");
-    	return json_encode($info);
-    }
-
     function chknError(){
         $this->error->error_page();
 		exit;
@@ -95,24 +71,6 @@ class Controller extends App_Controller{
     function array_var($key, $array){
     	$this->pass_array_var($key, $array);
     }
-
-    function seal($value = ""){
-    	$encrypt = Helper::encrypt($value);
-    	return base64_encode($encrypt);
-    }
-
-    function rseal($value = ""){
-    	$decode = base64_decode($value);
-    	$decrypt = Helper::decrypt($decode);
-    	return $decrypt;
-    }
-
-    function array_seal($array = array(),$field = ""){
-    	for($x=0;$x<count($array);$x++){
-    		$array[$x][$field] = $this->seal($array[$x][$field]);
-    	}
-    	return $array;
-	}
 	
 	function forceCSRF(){
 		if(isset($_SESSION["CSRFToken"])){

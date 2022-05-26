@@ -3,7 +3,6 @@ namespace http\Controllers;
 
 use App\Controller\Controller;
 use App\App\Request;
-use App\Helpers\Helper;
 use App\Database\DB;
 
 class index extends Controller{
@@ -20,11 +19,10 @@ class index extends Controller{
 
 		//Page Script
 		$this->js([]);
-
+		
 		//Page Content
 		$this->body("homepage/index");
-
 		$this->show();
+		
 	}
 }
-

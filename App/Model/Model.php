@@ -116,6 +116,16 @@ class Model extends App_Model{
         }
     }
 
+    public static function query_exec(){
+        $this->db_connect();
+        $query = $sql[0];
+        $this->db_prepare($query);
+        $count = substr_count($query,':param');
+        for($x=0;$x<$count;$x++){$a = $x+1;$this->db_bind(':param'.$a,$sql[1][$x]);}
+        $data = $this->db_execute();
+        return $data;
+    }
+
     /**
      * @param $table
      * @return mixed

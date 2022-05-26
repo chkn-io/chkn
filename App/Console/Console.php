@@ -160,7 +160,23 @@ class Console{
         }
     }
     private function serve($port){
-        shell_exec("php -S localhost:".$port);
+        $path = "config/app.conf";
+        $file = fopen($path,"r");
+        $content = file_get_contents($path);
+        while(!feof($file)){
+            $string = fgets($file);
+            if (stripos($string, "APPLICATION_KEY") !== false) {
+                $s = trim(str_replace("APPLICATION_KEY=","",$string));
+                $len = strlen($s);
+                if($len == 44){
+                    shell_exec("php -S localhost:".$port);
+                }else{
+                    $this->response("Invalid Application Key. Re-install/Install the Application Key first.","Error");
+                }
+            }
+        }
+
+
     }
 
     private function root($folder = ""){
@@ -223,7 +239,6 @@ namespace http\Controllers;
 
 use App\Controller\Controller;
 use App\App\Request;
-use App\Helpers\Helper;
 
 class '.$controller.'Controller extends Controller{
 	public function '.$controller.'(){
@@ -243,10 +258,7 @@ class '.$controller.'Controller extends Controller{
 		//Page Content
 		$this->body("'.$controller.'/index");
 
-		//App Status
-		//$this->chkn_status();
-
-		$this->show();
+        $this->show();
 	}
 }
 
@@ -481,7 +493,6 @@ class '.$controller.'Controller extends Controller{
     use App\App\Session;
     use App\Database\DB;
     use App\Controller\Auth;
-    use App\Helpers\Helper;
     
     class AuthController extends Controller{
         public function auth(){
@@ -505,8 +516,6 @@ class '.$controller.'Controller extends Controller{
                 $this->variable("auth_message",Session::get("auth_message")["status"]);
             }
     
-            //App Status
-            //$this->chkn_status();
     
             $this->show();
             Session::clear("auth_message");
@@ -526,12 +535,12 @@ class '.$controller.'Controller extends Controller{
                         ]
                     ]);
                 }else{
-                    $this->locate("auth");
                     Session::put("auth_status","error");
+                    locate("auth");
                 }
             }else{
-                $this->locate("auth");
                 Session::put("auth_status","error");
+                locate("auth");
             }
         }
     

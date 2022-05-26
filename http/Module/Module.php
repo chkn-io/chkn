@@ -4,5 +4,6 @@ use App\Controller\Controller;
 use App\Helpers\Helper;
 class Module extends Controller{
 	public static function sample(){
+        
     }
 }
