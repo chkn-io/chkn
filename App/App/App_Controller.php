@@ -4,18 +4,16 @@ namespace App\App;
 use App\View\View;
 use App\View\Error;
 use App\View\maintenance;
-use App\Template\CHKNTemplate;
+use App\Gaff\Template;
 
 
 class App_Controller{
-	public $assignedValues = array();
-  public $variable = array();
-  public $array_var = array();
-	public $tpl;
-  public $view;
-  public $error;
-  public $maintenance;
-  public $tem_tool;
+	public static $assignedValues = [];
+  public static $variable = [];
+  public static $array_var = [];
+	public static $tpl;
+  public static $view;
+  public static $tem_tool;
 
   protected $post;
    protected $get;
@@ -26,24 +24,17 @@ class App_Controller{
      */
 
     function __construct(){
-        $this->view = new View;
+        self::$view = new View;
         
-        if(PAGE_NOT_FOUND == 1){
-           $this->error = new Error;
-        }
-        if(MAINTENANCE_CLASS == 1){
-           $this->maintenance = new maintenance;
-        }
-
-        $this->tem_tool = new CHKNTemplate;
+        self::$tem_tool = new Template;
     }
 
-	function path($_path = ''){
+	public static function path($_path = ''){
 		if(!empty($_path)){
 			if(file_exists($_path)){
-				$this->tpl = file_get_contents($_path);	
+				self::$tpl = file_get_contents($_path);	
 			}else{
-				$this->chknError();
+				Error::error_page();
 			}
 		}
   }
@@ -61,9 +52,9 @@ class App_Controller{
      * This function is responsible for replacing variables with {} to its defined values
      */
     
-	function assign($_searchString, $_replacedString){
+	public static function assign($_searchString, $_replacedString){
 		if(!empty($_searchString)){
-			$this->assignedValues[strtolower($_searchString)] = $_replacedString;
+			self::$assignedValues[strtolower($_searchString)] = $_replacedString;
 		}
 	}
 
@@ -73,50 +64,51 @@ class App_Controller{
      * @param $_replacedString
      * This function is responsible for replacing variables with {} to its defined values
      */
-  function pass_variable($_searchString, $_replacedString){
+  static function pass_variable($_searchString, $_replacedString){
     if(!empty($_searchString)){
-      $this->variable[$_searchString] = $_replacedString;
+      self::$variable[$_searchString] = $_replacedString;
     }
   }
 
-  function pass_array_var($key, $array){
-    $this->array_var[$key] = $array;
+  static function pass_array_var($key, $array){
+    self::$array_var[$key] = $array;
   }
 
     /**
      *This function executes the requested page(template,page,css,js,etc.)
      */
 
-	function dispose(){
-		if(count($this->assignedValues) > 0){
-			foreach($this->assignedValues as $key => $value){
-				$this->tpl = str_replace('['.$key.']',$value,$this->tpl);
+	static function dispose(){
+		if(count(self::$assignedValues) > 0){
+			foreach(self::$assignedValues as $key => $value){
+				self::$tpl = str_replace('['.$key.']',$value,self::$tpl);
 			}
 
-      foreach($this->variable as $key => $value){
-        $this->tpl = str_replace('$'.$key.'',$value,$this->tpl);
+      foreach(self::$variable as $key => $value){
+        self::$tpl = str_replace('$'.$key.'',$value,self::$tpl);
       }
 
-			$this->tpl = str_replace('[chkn:path]',DEFAULT_URL,$this->tpl);	
-      preg_match('/#if(.*?)#}/s', $this->tpl,$result);
+			self::$tpl = str_replace('[chkn:path]',DEFAULT_URL,self::$tpl);	
+      preg_match('/#if(.*?)#}/s', self::$tpl,$result);
       if(count($result) != 0){
-        $response = $this->tem_tool->if_condition($result);
-        $this->tpl = str_replace($result[0], eval($response), $this->tpl);
+        $response = self::$tem_tool->if_condition($result);
+        self::$tpl = str_replace($result[0], eval($response), self::$tpl);
       }
 
-      preg_match('/#for(\\(.*?)#endfor/s', $this->tpl,$result);
+      preg_match('/#for(\\(.*?)#endfor/s', self::$tpl,$result);
       if(count($result) != 0){
-       $return = $this->tem_tool->forloop($result);
-        $this->tpl = str_replace($result[0], $return, $this->tpl);
+       $return = self::$tem_tool->forloop($result);
+        self::$tpl = str_replace($result[0], $return, self::$tpl);
       } 
 
-      preg_match('/#foreach(\\(.*?)#endforeach/s', $this->tpl,$result);
+      preg_match('/#foreach(\\(.*?)#endforeach/s', self::$tpl,$result);
+
       if(count($result) != 0){
-        $return = $this->tem_tool->foreachs($this->tpl,$result,$this->array_var);
-        
-        $this->tpl = str_replace($result[0], $return, $this->tpl);
+        $return = self::$tem_tool->foreachs(self::$tpl,$result,self::$array_var);
+        self::$tpl = str_replace($result[0], $return, self::$tpl);
       }
-      echo $this->tpl;
+
+      echo self::$tpl;
 		}
 	}
 

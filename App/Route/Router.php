@@ -35,15 +35,18 @@ class Router extends Loader{
 			}
 		}
 
-
 		$this->controller =  $this->_url[0].'Controller';
-		$this->load_page_controller($this->controller);
-		
+		// $this->load_page_controller($this->controller);
+		$h = trim(INDEX);
 		if($this->controller == "Controller"){
-			$this->controller = "index";
+			$this->controller = $h."Controller";
+			$this->load_page_controller($this->controller);
+		}else{
+			$this->load_page_controller($this->controller);
 		}
 
 		if(class_exists("http\Controllers\\".$this->controller)){
+
 			if(CSRF == 1){
 				if(isset($_REQUEST["CSRFToken"])){
 					$t = CSRFToken::validator($_REQUEST["CSRFToken"]);
@@ -81,12 +84,11 @@ class Router extends Loader{
 			$class = $namespace.$this->controller;
 			$page = new $class;
 			$url_count = count($this->_url);
-			
-
 			if($url_count == 1){	
+				
 				if($this->_url[0] == ""){
 					$page = new $class;
-					$page->index_page(new Request($r,$f));
+					$page->$h(new Request($r,$f));
 				}else{
 				
 					if(method_exists($class,$this->_url[0])){

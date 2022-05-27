@@ -26,7 +26,7 @@ class View {
                 for($x=0;$x<count($ex);$x++){
                     if($ex[0] != ""){
                         $path = DEFAULT_URL.'public/vendor/css/';
-                        $file = $ex[$x].'.css';
+                        $file = $ex[$x];
                         if(file_exists('public/vendor/css/'.$file)){
                             $css[$x] = '<link href="'.$path.$file.'" rel="stylesheet" type="text/css">';
                         }else{
@@ -41,7 +41,7 @@ class View {
                 for($x=0;$x<count($value);$x++){
                     $y++;
                     $path = DEFAULT_URL.'public/css/';
-                    $file = $value[$x].'.css';
+                    $file = $value[$x];
                     if(file_exists('public/css/'.$file)){
                         $private_css.=$value[$x].',';
                         $css[$y] = '<link href="'.$path.$file.'" rel="stylesheet" type="text/css">';
@@ -59,7 +59,7 @@ class View {
                 for($x=0;$x<count($ex);$x++){
                     if($ex[0] != ""){
                          $path = DEFAULT_URL.'public/vendor/js/';
-                        $file = $ex[$x].'.js';
+                        $file = $ex[$x];
                         if(file_exists('public/vendor/js/'.$file)){
                             $js[$x] = '
                             <script type="text/javascript" src="'.$path.$file.'"></script>';
@@ -75,7 +75,7 @@ class View {
                 for($x=0;$x<count($value);$x++){
                 $y++;
                     $path = DEFAULT_URL.'public/js/';
-                    $file = $value[$x].'.js';
+                    $file = $value[$x];
                     if(file_exists('public/js/'.$file)){
                         $private_js.=$value[$x].',';
                         $js[$y] = '

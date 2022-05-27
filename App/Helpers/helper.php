@@ -3,6 +3,8 @@ use App\Helpers\UploadHelper;
 use App\Helpers\encrypt_helper;
 use App\Helpers\defaults;
 use App\App\CSRFToken;
+use App\View\Error;
+use App\View\Maintenance;
 
 
 
@@ -223,4 +225,18 @@ function dd($data){
 
 function ddt($message = ""){
     echo "[" . date("Y/m/d H:i:s") . "]" . $message . "<br>\n";
+}
+
+function error(){
+    if(PAGE_NOT_FOUND == 1){
+        Error::error_page();
+        exit;
+    }
+}
+
+function maintenance(){
+    if(MAINTENANCE_CLASS == 1){
+        Maintenance::maintenance_page();
+        exit;
+    }
 }

@@ -10,9 +10,10 @@ class Catcher{
 			$html = str_replace("{DEFAULT_URL}",DEFAULT_URL,$html);
 			$html = str_replace("{LINE_NUMBER}",$line,$html);
 			$message = explode("\n",$message);
-
 			if($head["type"] == "error"){
 				$html = str_replace("BACKCOLOR","rgb(247, 76, 76);",$html);
+			}elseif($head["type"] == "warning"){
+				$html = str_replace("BACKCOLOR","rgb(247 163 76);",$html);
 			}else{
 				$html = str_replace("{BACKCOLOR}","rgb(255, 170, 59);",$html);
 			}

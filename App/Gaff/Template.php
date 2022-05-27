@@ -1,13 +1,12 @@
 <?php
-namespace App\Template;
-class CHKNTemplate{
+namespace App\Gaff;
+class Template{
 	public function if_condition($source = array()){
 		$return = "";
         $condition = str_replace('{{',"return '",$source[0]);  
         $condition = str_replace('}}',"';",$condition);  
         $condition = str_replace('#if', 'if', $condition);
         $condition = str_replace('#}', '}', $condition);
-
         return $condition;
 	}
 

@@ -242,23 +242,9 @@ use App\App\Request;
 
 class '.$controller.'Controller extends Controller{
 	public function '.$controller.'(){
-		//Call Controller Template
-		$this->template("index");
-
-		//Change Page Title
-		$this->title("");
-
-		//Page Style
-		$this->css([
-		]);
-
-		//Page Script
-		$this->js([]);
-
-		//Page Content
-		$this->body("'.$controller.'/index");
-
-        $this->show();
+        return scene("index","'.$controller.'/index")
+			->title("")
+			->show();
 	}
 }
 
@@ -486,68 +472,54 @@ class '.$controller.'Controller extends Controller{
 		if(!file_exists("http/Controllers/AuthController.php")){
 			$cont = fopen("http/Controllers/AuthController.php", "w");
 			$content = '<?php
-    namespace http\Controllers;
-    
-    use App\Controller\Controller;
-    use App\App\Request;
-    use App\App\Session;
-    use App\Database\DB;
-    use App\Controller\Auth;
-    
-    class AuthController extends Controller{
-        public function auth(){
-            //Call Controller Template
-            $this->template("auth");
-    
-            //Change Page Title
-            $this->title("");
-    
-            //Page Style
-            $this->css([
-            ]);
-    
-            //Page Script
-            $this->js([]);
-    
-            //Page Content
-            $this->body("auth/index");
-            $this->variable("auth_message","");
-            if(Session::check("auth_message")){
-                $this->variable("auth_message",Session::get("auth_message")["status"]);
-            }
-    
-    
-            $this->show();
-            Session::clear("auth_message");
-        }
-    
-        public function login(Request $r){
-            if($r->isset(["username","password"])->status()){
-                if($r->check(["username","password"])){
-                    Auth::login("chkn_auth",[
-                        "username"=>$r->username,
-                        "password"=>$r->password,
-                        "url"=>[
-                            //Redirect when true
-                            "success"=>"../",
-                            //Redirect when false
-                            "failed"=>"auth"
-                        ]
-                    ]);
-                }else{
-                    Session::put("auth_status","error");
-                    locate("auth");
-                }
+namespace http\Controllers;
+
+use App\Controller\Controller;
+use App\App\Request;
+use App\App\Session;
+use App\Database\DB;
+use App\Controller\Auth;
+
+class AuthController extends Controller{
+    public function auth(){
+        $status = Session::check("auth_message") ? Session::get("auth_message")["status"] : "";
+
+        return scene("auth","auth/index")
+        ->title("Authentication Page")
+        ->bind([
+            "auth_message"=>$status
+        ])
+        ->show();
+        Session::clear("auth_message");
+    }
+
+    public function login(Request $r){
+        if($r->isset(["username","password"])->status()){
+            if($r->check(["username","password"])){
+                Auth::login("chkn_auth",[
+                    "username"=>$r->username,
+                    "password"=>$r->password,
+                    "url"=>[
+                        //Redirect when true
+                        "success"=>"../",
+                        //Redirect when false
+                        "failed"=>"auth"
+                    ]
+                ]);
             }else{
                 Session::put("auth_status","error");
                 locate("auth");
             }
-        }
-    
-        public function logout(){
-            Auth::logout("auth");
+        }else{
+            Session::put("auth_status","error");
+            locate("auth");
         }
     }
+
+    public function logout(){
+        Auth::logout("auth");
+    }
+}
 ';
 				
 				fwrite($cont, $content);

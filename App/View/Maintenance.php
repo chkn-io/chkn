@@ -11,7 +11,7 @@ namespace App\View;
  */
 
 class Maintenance{
-	public function maintenance_page(){
+	public static function maintenance_page(){
 		if(MAINTENANCE_CLASS == 1){
 			$template = file_get_contents('view/defaults/maintenance.tpl');
 		      $template = str_replace('[chkn:maintenance]',DEFAULT_URL,$template);

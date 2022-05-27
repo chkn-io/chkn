@@ -51,7 +51,8 @@ if(MODULE == 1){
     }
 }
 
-require_once('App/Template/CHKNTemplate.php');
+require_once('App/Gaff/Template.php');
+require_once('App/Gaff/Helper.php');
 
 $ex = explode(";",CHKN_ASSETS);
 foreach($ex as $value){
@@ -66,11 +67,6 @@ require_once('App/Helpers/helper.php');
 require_once('App/Helpers/encryption.php');
 require_once('App/Helpers/upload.php');
 require_once('App/Helpers/download.php');
-require_once('App/Helpers/default.php');
-
-
-require_once('http/Controllers/index.php');
-
 
 
 
