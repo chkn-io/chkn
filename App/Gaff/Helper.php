@@ -1,5 +1,6 @@
 <?php
 use App\App\App_Controller as app;
+use App\App\CSRFToken;
 
 class Template{
     private static $css;
@@ -33,7 +34,7 @@ class Template{
         return new static;
     }
 
-    static function bind($data = []){
+    static function bind($data = ""){
         foreach ($data as $key => $value) {
             if(is_array($value)){
     	        app::pass_array_var($key, $value);
@@ -64,6 +65,27 @@ function scene($template,$cvf){
     return Template::scene($template,$cvf);
 }
 
+function forceCSRF(){
+    if(isset($_SESSION["CSRFToken"])){
+        if(isset($_REQUEST["CSRFToken"])){
+            $t = CSRFToken::validator($_REQUEST["CSRFToken"]);
+            if($t != 1){
+                invalid_request();
+                exit;
+            }
+        }else{
+            invalid_request();
+            exit;
+        }
+    }else{			
+        invalid_request();
+        exit;
+    }
+}
 
-
-
+function invalid_request(){
+    header("HTTP/1.0 401");
+    $file = file_get_contents("view/defaults/invalid_request.tpl");
+    echo $file;
+    exit;
+}

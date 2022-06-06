@@ -112,23 +112,12 @@ namespace http\Controllers;
 
 use App\Controller\Controller;
 use App\App\Request;
-use http\Module\Module;
 
-class index extends Controller{
-	public function index_page(Request $r){
-		//Call index template
-		$this->template('index');
-		//set default title
-		$this->title('CHKN Framework');
-		//set css
-		$this->css([
-		]);
-		//set js
-		$this->js([
-		]);
-
-		$this->body('homepage/index');
-		$this->show();
+class homeController extends Controller{
+	public function home(){
+		return scene("index","homepage/index")
+			->title("Hello World")
+			->show();
 	}
 }
 
@@ -136,12 +125,11 @@ class index extends Controller{
 
 ```
 
-* **$this->template('index')** - *Calling the the page template. 'index' is pertaining the the template file located at view/template/index.tpl*
-* **$this->title();** - *Set the title of the page.*
-* **$this->css([]);** - *Including stylesheets inside the page. CSS Files are stored at public/css. In addition, CSS Files are called without the .css file extension*
-* **$this->js([]);** - *Including scripts inside the page. Script Files are stored at public/js. In addition, Script Files are called without the .js file extension*
-* **$this->body('homepage/index')** - *Including the page content inside the template. This method will only going to fetch .cvf files*
-* **$this->show()** - *Compile the settings above and display the page.*
+* **scene("template","page content")** - *Calling the the page template. 'index' is pertaining the the template file located at view/template/index.tpl*
+* **->title()** - *Set the title of the page.*
+* **->css()** - *Including stylesheets inside the page. CSS Files are stored at public/css.*
+* **->js()** - *Including scripts inside the page. Script Files are stored at public/js.*
+* **->show()** - *Compile the settings above and display the page.*
 
 
 ## Routing
@@ -155,10 +143,24 @@ Most of the times, links are most likely use when navigating from one page to an
 
 ## Templating Tool
 ### Passing values to your template
-Data processed by controller can be pass inside your template using the $this-> variable() method.
+Data processed by controller can be pass inside your template using the variable() chain method of the scene() function.
 ```php
 //your controller 
-$this-> variable( “variable_name”, ”variable_value” ); 
+<?php
+namespace http\Controllers;
+
+use App\Controller\Controller;
+use App\App\Request;
+
+class homeController extends Controller{
+	public function home(){
+		return scene("index","homepage/index")
+			->title("Hello World")->bind([
+				"variable_name"=>"value"
+			])
+			->show();
+	}
+} 
 ```
 ```html 
 <body> 
@@ -169,18 +171,26 @@ $this-> variable( “variable_name”, ”variable_value” );
 Array processed by controller can be pass inside your template using the $this-> array_var() method.
 ```php
 //your controller 
-$array = array( 
-     0=> array( 
-        "name"=> "Ben", 
-        "age"=> "25"),
-	  
-     1=> array( 
-	"name"=> "Anna", 
-	"age"=> "24") 
-); 
+$array = [
+     0=> ["name"=> "Ben","age"=> "25"],
+     1=> ["name"=> "Anna","age"=> "24"]
+];
 
-$this->array_var( “array_name”, $array);
+namespace http\Controllers;
 
+use App\Controller\Controller;
+use App\App\Request;
+
+class homeController extends Controller{
+	public function home(){
+		return scene("index","homepage/index")
+			->title("Hello World")
+			->bind([
+				"variable_name"=>$array
+			])
+			->show();
+	}
+} 
 ```
 
 ### Populating assigned array on your template using foreach
@@ -205,7 +215,22 @@ Assigned array variable on the Controller can be populated using the CHKN Framew
 You can also set a conditional statement out of the assigned variables.
 ```php
 //your controller 
-$this->variable( “type”, ”active” ); 
+<?php
+namespace http\Controllers;
+
+use App\Controller\Controller;
+use App\App\Request;
+
+class homeController extends Controller{
+	public function home(){
+		return scene("index","homepage/index")
+			->title("Hello World")
+			->bind([
+				"type"=>"active"
+			])
+			->show();
+	}
+} 
 ```
 
 ```html
