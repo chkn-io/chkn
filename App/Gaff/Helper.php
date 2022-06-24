@@ -47,9 +47,9 @@ class Template{
 
    
     static function show(){
-        if(isset($_SESSION["CSRF"])){
-			app::assign('form:csrf','<input type="hidden" name="CSRFToken" value="'.$_SESSION["CSRF"].'">');
-        	app::assign('chkn:csrf',$_SESSION["CSRF"]);
+        if(isset($_SESSION["CSRFToken"])){
+			app::assign('form:csrf','<input type="hidden" name="CSRFToken" value="'.$_SESSION["CSRFToken"].'">');
+        	app::assign('chkn:csrf',$_SESSION["CSRFToken"]);
 		}
         if(!self::$css){
             app::assign('chkn:style',app::$view->Html_Objects('css',[]));

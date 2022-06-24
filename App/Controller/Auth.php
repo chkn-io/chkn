@@ -3,18 +3,50 @@ namespace App\Controller;
 use App\Database\DB;
 use App\App\Session;
 use App\Helpers\Helper;
+use App\App\App_Controller as app;
 
 class Auth extends Controller
 {
-	static function check($data,$redirect_url){
+    public static $auth = [];
+   
+    static function get($key = ""){
+        return Session::get("auth")[$key];
+    }
+
+	static function check($data,$redirect_url=""){
         $keys = array_keys($data);
-    	if(Session::get("auth")){
-    		if(Session::get("auth")[$keys[0]] != $data[$keys[0]]){
-				header("location:".$redirect_url);
-			}
-    	}else{
-            header("location:".$redirect_url);
-    	}
+        if(Session::check("auth")){
+            if(Session::get("auth")){
+                $d = explode(",",$data[$keys[0]]);
+                $checker = 0;
+                for($x=0;$x<count($d);$x++){
+                    if($d[$x] == Session::get("auth")[$keys[0]]){
+                        $checker++;
+                    }
+                }
+                if($checker == 0){
+                    if($redirect_url == ""){
+                        return false;
+                    }else{
+                        header("location:".$redirect_url);
+                    }
+                }else{
+                    return true;
+                }
+            }else{
+                if($redirect_url == ""){
+                    return false;
+                }else{
+                    header("location:".$redirect_url);
+                }
+            }
+        }else{
+            if($redirect_url == ""){
+                return false;
+            }else{
+                header("location:".$redirect_url);
+            }
+        }
     }
 
     static function user($data){

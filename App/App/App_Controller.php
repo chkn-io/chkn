@@ -88,6 +88,12 @@ class App_Controller{
         self::$tpl = str_replace('$'.$key.'',$value,self::$tpl);
       }
 
+      preg_match_all('/\$date->[A-Z|a-z]/', self::$tpl, $result);
+      for($x=0;$x<count($result[0]);$x++){
+        $match = str_replace('$date->','',$result[0][$x]);
+        self::$tpl = str_replace($result[0][$x],date($match),self::$tpl);
+      }
+      
 			self::$tpl = str_replace('[chkn:path]',DEFAULT_URL,self::$tpl);	
       preg_match('/#if(.*?)#}/s', self::$tpl,$result);
       if(count($result) != 0){

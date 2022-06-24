@@ -46,21 +46,28 @@ class Router extends Loader{
 		}
 
 		if(class_exists("http\Controllers\\".$this->controller)){
-
+			
 			if(CSRF == 1){
 				if(isset($_REQUEST["CSRFToken"])){
-					$t = CSRFToken::validator($_REQUEST["CSRFToken"]);
-					if($t != 1){
+					if(isset($_REQUEST["CSRFToken"])){
+						$t = CSRFToken::validator($_REQUEST["CSRFToken"]);
+						if($t != 1){
+							$this->invalid_request();
+						}
+					}else{
 						$this->invalid_request();
 					}
 				}else{
-					if(count($_REQUEST) > 2){
-						CSRFToken::init();
+					if($_SERVER["REQUEST_METHOD"] === "POST"){
 						$this->invalid_request();
-					}else{
-						CSRFToken::init();
 					}
 				}
+
+				if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
+				}else{
+					CSRFToken::init();  
+				}
+
 			}
 
 			$r = $_REQUEST;
@@ -85,19 +92,16 @@ class Router extends Loader{
 			$page = new $class;
 			$url_count = count($this->_url);
 			if($url_count == 1){	
-				
 				if($this->_url[0] == ""){
 					$page = new $class;
 					$page->$h(new Request($r,$f));
 				}else{
-				
 					if(method_exists($class,$this->_url[0])){
 						if(strlen(APPLICATION_KEY) != 43){
 							echo "APPLICATION KEY Not Yet Updated";
 						}else{
 							$page_url = $this->_url[0];
 							$post = array();
-							$request["message"] = 'CHKN Framework Request';
 							$page->$page_url(new Request($r,$f));
 						}
 					}else{
@@ -107,7 +111,6 @@ class Router extends Loader{
 			}elseif($url_count == 2){
 				$page_url = $this->_url[1];
 				$post = array();
-				$request["message"] = 'CHKN Framework Request';
 
 				if(method_exists($class,$this->_url[1])){
 					if(strlen(APPLICATION_KEY) != 43){

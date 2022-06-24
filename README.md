@@ -546,3 +546,48 @@ class sampleController extends Controller{
 }
 
 ```
+
+## Auth Controller
+Generate an authentication page in the Application.
+   * `php chkn auth:create`
+
+## Auth Class
+Access authentication session using the Auth Class.
+
+### Auth::check(array,redirect)
+Trigger authentication checking in selected method in a class using the Auth::check() function
+
+```php
+<?php
+// Module
+namespace http\Controller;
+use App\Controller\Controller;
+use App\Controller\Auth;
+
+
+class homeController extends Controller{
+    public static function home(){
+		Auth::check(["role"=>"admin"],"auth");
+    }
+}
+
+```
+
+Check method access with multiple roles
+```php
+<?php
+// Module
+namespace http\Controller;
+use App\Controller\Controller;
+use App\Controller\Auth;
+
+class homeController extends Controller{
+    public static function home(){
+		Auth::check(["role"=>"admin,staff,cashier"],"auth");
+    }
+}
+
+```
+
+
+
