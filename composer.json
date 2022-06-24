@@ -1,18 +1,14 @@
 {
-    "name": "perci/chkn",
-    "description": "PHP Framework for developing lightweight server-side web applications.",
-    "type": "project",
+    "name": "chkn/core",
+    "description": "PHP MVC Framework",
     "license": "MIT",
     "autoload": {
-        "psr-4": {
-            "Perci\\Chkn\\": "src/"
-        }
     },
     "authors": [
         {
-            "name": "Percian Joseph Borja",
-            "email": "percian0296@gmail.com"
+            "name": "Percian Joseph Borja"
         }
     ],
-    "require": {}
+    "require": {
+    }
 }
