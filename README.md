@@ -16,7 +16,9 @@ PHP Framework for developing lightweight server-side application.
     * Changing Database Charset = `php chkn db:charset __charset__`
     * Changing Database Username = `php chkn db:username __username__`
     * Changing Database Password = `php chkn db:password __password__`
-
+5. Run the application
+    * `php chkn roast`
+    * `php chkn roast --port=8000
 
 ## Package
 Default classes on CHKN Framework are grouped and compiled inside `Drive:ROOT_FOLDER/config/Package/package.conf`
